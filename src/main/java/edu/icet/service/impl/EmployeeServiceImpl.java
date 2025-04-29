@@ -8,7 +8,10 @@ import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
+import javax.swing.text.html.parser.Entity;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 
@@ -103,5 +106,18 @@ public class EmployeeServiceImpl implements EmployeeService {
                 .orElseThrow(() -> new IllegalArgumentException("Employee not found"));
 
         repository.delete(existingEmployee);
+    }
+
+    @Override
+    public List<Employee> getAllEmployee() {
+        List<Employee> list = new ArrayList<>();
+        List<EmployeeEntity> all = repository.findAll();
+
+        //check if the list empty or not
+        if (!all.isEmpty()) {
+            all.forEach(employeeEntity -> list
+                    .add(mapper.map(employeeEntity, Employee.class)));
+        }
+        return list;
     }
 }

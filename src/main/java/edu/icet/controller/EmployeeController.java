@@ -7,6 +7,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @CrossOrigin
 @RequiredArgsConstructor
@@ -55,6 +57,20 @@ public class EmployeeController {
             return ResponseEntity
                     .status(HttpStatus.NOT_FOUND)
                     .body(e.getMessage());
+        }
+    }
+
+    @GetMapping("/get-all")
+    public ResponseEntity<List<Employee>> getAllEmployee(){
+        try {
+            List<Employee> employees = service.getAllEmployee();
+            return ResponseEntity
+                    .status(HttpStatus.OK)
+                    .body(employees);
+        } catch (IllegalArgumentException e) {
+            return ResponseEntity
+                    .status(HttpStatus.NOT_FOUND)
+                    .body(null);
         }
     }
 }
