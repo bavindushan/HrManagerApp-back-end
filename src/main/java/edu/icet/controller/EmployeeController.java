@@ -4,6 +4,7 @@ import edu.icet.dto.Employee;
 import edu.icet.service.EmployeeService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -15,14 +16,45 @@ public class EmployeeController {
     final EmployeeService service;
 
     @PostMapping("/add")
-    @ResponseStatus(HttpStatus.CREATED)
-    public void addEmployee(@RequestBody Employee employee){
-        service.addEmployee(employee);
+    public ResponseEntity<String> addEmployee(@RequestBody Employee employee){
+        try {
+            service.addEmployee(employee);
+            return ResponseEntity
+                    .status(HttpStatus.CREATED)
+                    .body("Employee added successfully");
+        } catch (IllegalArgumentException e) {
+            return ResponseEntity
+                    .status(HttpStatus.BAD_REQUEST)
+                    .body(e.getMessage());
+        }
     }
 
     @PutMapping("/update")
-    @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void updateEmployee(@RequestBody Employee employee){
-        service.updateEmployee(employee);
+    public ResponseEntity<String> updateEmployee(@RequestBody Employee employee){
+        try {
+            service.updateEmployee(employee);
+            return ResponseEntity
+                    .status(HttpStatus.OK)
+                    .body("Employee updated successfully");
+        } catch (IllegalArgumentException e) {
+            return ResponseEntity
+                    .status(HttpStatus.NOT_FOUND)
+                    .body(e.getMessage());
+        }
+    }
+
+    @DeleteMapping("/delete/{id}")
+    public ResponseEntity<String> deleteEmployeeById(@PathVariable Integer id){
+
+        try {
+            service.deleteEmployeeById(id);
+            return ResponseEntity
+                    .status(HttpStatus.OK)
+                    .body("Employee deleted successfully");
+        } catch (IllegalArgumentException e) {
+            return ResponseEntity
+                    .status(HttpStatus.NOT_FOUND)
+                    .body(e.getMessage());
+        }
     }
 }

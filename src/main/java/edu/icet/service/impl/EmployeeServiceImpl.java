@@ -9,6 +9,7 @@ import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.util.Optional;
 
 
 @Service
@@ -93,5 +94,14 @@ public class EmployeeServiceImpl implements EmployeeService {
         existingEmployee.setDepartment(employee.getDepartment());
 
         repository.save(existingEmployee);
+    }
+
+    @Override
+    public void deleteEmployeeById(Integer id) {
+        // cheking is this available or not
+        EmployeeEntity existingEmployee = repository.findById(id)
+                .orElseThrow(() -> new IllegalArgumentException("Employee not found"));
+
+        repository.delete(existingEmployee);
     }
 }
