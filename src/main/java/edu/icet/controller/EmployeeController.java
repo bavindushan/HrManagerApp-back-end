@@ -64,12 +64,17 @@ public class EmployeeController {
     public ResponseEntity<List<Employee>> getAllEmployee(){
         try {
             List<Employee> employees = service.getAllEmployee();
+            if (employees.isEmpty()) {
+                return ResponseEntity
+                        .status(HttpStatus.OK)
+                        .body(employees);
+            }
             return ResponseEntity
                     .status(HttpStatus.OK)
                     .body(employees);
         } catch (IllegalArgumentException e) {
             return ResponseEntity
-                    .status(HttpStatus.NOT_FOUND)
+                    .status(HttpStatus.INTERNAL_SERVER_ERROR)
                     .body(null);
         }
     }
