@@ -33,9 +33,15 @@ public class EmployeeEntity {
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
 
+    //auto set the date and time
     @PrePersist
     protected void onCreate(){
         this.createdAt = LocalDateTime.now();
+        this.updatedAt = LocalDateTime.now();
+    }
+
+    @PreUpdate
+    protected void onUpdate(){
         this.updatedAt = LocalDateTime.now();
     }
 }

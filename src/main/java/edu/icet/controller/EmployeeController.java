@@ -19,4 +19,10 @@ public class EmployeeController {
     public void addEmployee(@RequestBody Employee employee){
         service.addEmployee(employee);
     }
+
+    @PutMapping("/update")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void updateEmployee(@RequestBody Employee employee){
+        service.updateEmployee(employee);
+    }
 }
