@@ -73,4 +73,18 @@ public class EmployeeController {
                     .body(null);
         }
     }
+
+    @GetMapping("/get-by-id/{id}")
+    public ResponseEntity<Employee> searchByEmployeeId(@PathVariable Integer id){
+        try {
+            Employee employees = service.searchByEmployeeId(id);
+            return ResponseEntity
+                    .status(HttpStatus.OK)
+                    .body(employees);
+        }catch (IllegalArgumentException e){
+            return ResponseEntity
+                    .status(HttpStatus.NOT_FOUND)
+                    .body(null);
+        }
+    }
 }

@@ -120,4 +120,13 @@ public class EmployeeServiceImpl implements EmployeeService {
         }
         return list;
     }
+
+    @Override
+    public Employee searchByEmployeeId(Integer id) {
+        // Checking if the employee in the table
+        EmployeeEntity existingEmployee = repository.findById(id)
+                .orElseThrow(() -> new IllegalArgumentException("Employee not found with ID: " + id));
+
+        return mapper.map(existingEmployee, Employee.class);
+    }
 }
