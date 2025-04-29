@@ -29,6 +29,13 @@ public class EmployeeEntity {
     private String email;
 
     private DepartmentType department;
+
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
+
+    @PrePersist
+    protected void onCreate(){
+        this.createdAt = LocalDateTime.now();
+        this.updatedAt = LocalDateTime.now();
+    }
 }

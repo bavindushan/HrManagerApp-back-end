@@ -49,13 +49,6 @@ public class EmployeeServiceImpl implements EmployeeService {
             throw new IllegalArgumentException("Email already exists");
         }
 
-        // Map DTO to Entity
-        var employeeEntity = mapper.map(employee, EmployeeEntity.class);
-
-        // Set Timestamps
-        employeeEntity.setCreatedAt(LocalDateTime.now());
-        employeeEntity.setUpdatedAt(LocalDateTime.now());
-
-        repository.save(employeeEntity);
+        repository.save(mapper.map(employee, EmployeeEntity.class));
     }
 }
