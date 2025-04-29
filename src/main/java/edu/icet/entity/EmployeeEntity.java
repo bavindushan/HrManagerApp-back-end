@@ -28,6 +28,7 @@ public class EmployeeEntity {
     @Column(nullable = false,unique = true)
     private String email;
 
+    @Enumerated(EnumType.STRING)
     private DepartmentType department;
 
     private LocalDateTime createdAt;
